@@ -1,20 +1,19 @@
 import * as types from './const';
 
 const initialState = {
-    data: {},
     reducerState: '',
     errorMessage: '',
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case types.STARTED_LOADING_DATA:
+        case types.STARTED_SEARCH_DATA:
             return { ...state, reducerState: action.payload };
             break;
-        case types.FINISHED_LOADING_DATA:
-            return { ...state, reducerState: action.payload.state, data: action.payload.data };
+        case types.FINISHED_SEARCH_DATA:
+            return { ...state, reducerState: action.payload };
             break;
-        case types.ERROR_LOADING_DATA:
+        case types.ERROR_SEARCHING_DATA:
             return {
                 ...state,
                 reducerState: action.payload.state,

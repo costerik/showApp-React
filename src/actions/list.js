@@ -100,7 +100,7 @@ export const loadingData = (year, genre) => {
         dispatch(startedLoadingData());
         try {
             console.log("b");
-            await myServices.getDiscover({ year, with_genres: genre })
+            await myServices.getDiscoverMovie({ year, with_genres: genre })
                 .then((response) => {
                     response.json().then((data) => {
                         console.log(data);

@@ -18,37 +18,37 @@ class List extends Component {
         await this.props.loadingData();
     }
 
-    displayData(data) {
-
+    displayData(data, genres) {
         console.log(this.props.reducerState);
-        if(this.props.reducerState === globalTypes.LOADING){
+        if (this.props.reducerState === globalTypes.LOADING) {
             return (
-                <div className="wrapper-spinner"><i className="fa fa-spinner fa-spin fa-3x"/></div>
+                <div className="wrapper-spinner"><i className="fa fa-spinner fa-spin fa-3x" /></div>
             );
-        }else{
-            return Object.keys(data).length > 0 && data.results.length > 0 ? 
-            data.results.map(datum => <Card key={datum.id} data={datum}/>) 
-            : <p>"Sorry no movies were found related to these criterias"</p>;
+        } else {
+            return Object.keys(data).length > 0 && data.results.length > 0 ?
+                data.results.map(datum => <Card key={datum.id} data={datum} genres={genres} />)
+                : <p>"Sorry no movies were found related to these criterias"</p>;
         }
-        // <li key={datum.id}>{datum.title}</li>
     }
 
     render() {
-        const { data } = this.props;
-        console.log('render', data);
+        const { data, genres } = this.props;
+        console.log('render', data, genres);
         return (
             <ul className="list">
-                {this.displayData(data)}
+                {this.displayData(data, genres)}
             </ul>
         );
     }
 }
 
-const mapStateToProps = ({ listReducer }) => {
+const mapStateToProps = ({ listReducer, filtersReducer }) => {
     const { data, reducerState } = listReducer;
+    const { genres } = filtersReducer;
     return {
         data,
         reducerState,
+        genres,
     }
 }
 

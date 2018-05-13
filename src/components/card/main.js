@@ -9,6 +9,22 @@ class Card extends Component {
         super(props);
     }
 
+    _genres(genres, ids) {
+        let result = "";
+        let max = 0;
+        ids.forEach(id => {
+            if (max < 2) {
+                genres.forEach(genre => {
+                    if (genre.value === id) {
+                        result += genre.label + ",";
+                    }
+                });
+                max+=1;
+            }
+        });
+        return result.slice(0, result.length-1);
+    }
+
     render() {
         const date = moment(this.props.data.release_date.toString()).format("MMM Do YYYY");
         return (
@@ -21,14 +37,13 @@ class Card extends Component {
                             <p className="average">{this.props.data.vote_average}</p>
                         </div>
                         <ul>
-                            {/* <li>{this.props.data.release_date}</li> */}
                             <li>{date}</li>
-                            <li>{this.props.data.genre_ids}</li>
+                            <li>{this._genres(this.props.genres, this.props.data.genre_ids)}</li>
                         </ul>
                         <p className="overview">{this.props.data.overview}</p>
                         <div className="card-right__bottom">
                             <p className="show-trailer">
-                                ver trailer
+                                Ver Trailer
                             </p>
                             <p className="favorites-link">
                                 Agregar a favoritos

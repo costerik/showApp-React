@@ -5,9 +5,11 @@ const _imagesUrl92 = 'https://image.tmdb.org/t/p/w92';
 const _youtube = 'https://www.youtube.com/embed/';
 const _key = '2c76f2934b9b26dd102cc7de830a7455';
 const _endPoints = {
-    discover: 'discover/movie',
+    discoverMovie: 'discover/movie',
+    discoverTv: 'discover/tv',
     detail: 'movie',
-    search: 'search/movie',
+    searchMovies: 'search/movie',
+    searchTv: 'search/tv',
     popular: 'movie/popular',
     genres: 'genre/movie/list'
 };
@@ -18,15 +20,27 @@ export default {
     imagesUrl342: _imagesUrl342,
     imagesUrl92: _imagesUrl92,
     youtube: _youtube,
-    getDiscover: (params) => {
+    getDiscoverMovie: (params) => {
         let paramsUrl = "";
         for (let key in params) {
             if (params[key]) {
                 paramsUrl += "&" + key + "=" + params[key];
             }
         }
-        console.log(`${_apiUrl + _endPoints.discover}?api_key=${_key}${paramsUrl}`);
-        return fetch(`${_apiUrl + _endPoints.discover}?api_key=${_key}${paramsUrl}`, {
+        console.log(`${_apiUrl + _endPoints.discoverMovie}?api_key=${_key}${paramsUrl}`);
+        return fetch(`${_apiUrl + _endPoints.discoverMovie}?api_key=${_key}${paramsUrl}`, {
+            method: 'get'
+        });
+    },
+    getDiscoverTv: (params) => {
+        let paramsUrl = "";
+        for (let key in params) {
+            if (params[key]) {
+                paramsUrl += "&" + key + "=" + params[key];
+            }
+        }
+        console.log(`${_apiUrl + _endPoints.discoverTv}?api_key=${_key}${paramsUrl}`);
+        return fetch(`${_apiUrl + _endPoints.discoverTv}?api_key=${_key}${paramsUrl}`, {
             method: 'get'
         });
     },
@@ -40,8 +54,13 @@ export default {
             method: 'get'
         });
     },
-    search: (text) => {
-        return fetch(`${_apiUrl + _endPoints.search}?api_key=${_key}&query=${text}`, {
+    searchMovies: (text) => {
+        return fetch(`${_apiUrl + _endPoints.searchMovies}?api_key=${_key}&query=${text}`, {
+            method: 'get'
+        });
+    },
+    searchTv: (text) => {
+        return fetch(`${_apiUrl + _endPoints.searchTv}?api_key=${_key}&query=${text}`, {
             method: 'get'
         });
     },
