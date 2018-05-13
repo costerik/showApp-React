@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class List extends Component {
     render() {
         return (
-            <div>
-                hola
-            </div>
+            <ul>
+                <li>
+                    first
+                </li>
+            </ul>
         );
     }
 }
 
-export default List;
+export default connect(null,null)(List);

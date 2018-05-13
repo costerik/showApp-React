@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import './style.css';
 
 class Search extends Component {
@@ -14,4 +15,4 @@ class Search extends Component {
     }
 }
 
-export default Search;
+export default connect(null,null)(Search);

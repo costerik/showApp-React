@@ -20,9 +20,9 @@ const scssProd = ExtractTextPlugin.extract({   //HMR doesnt work with ExtractTex
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
-    entry:{ 
-        app: './src/app.js'
-    },
+    entry:[ 
+        'babel-polyfill','./src/app.js'
+    ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js', //[name] refer to properties on entry object

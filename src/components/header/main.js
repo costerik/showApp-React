@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './style.css';
 
 class Header extends Component {
@@ -16,4 +17,8 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const connectStateToProps = () => {
+    
+}
+
+export default connect(null, null)(Header);
