@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadingData } from '../../actions/list';
+import Card from '../card/main';
 import * as globalTypes from '../../const';
 import './style.css';
 
@@ -22,13 +23,14 @@ class List extends Component {
         console.log(this.props.reducerState);
         if(this.props.reducerState === globalTypes.LOADING){
             return (
-                <div><i className="fa fa-spinner fa-spin fa-3x"/></div>
+                <div className="wrapper-spinner"><i className="fa fa-spinner fa-spin fa-3x"/></div>
             );
         }else{
             return Object.keys(data).length > 0 && data.results.length > 0 ? 
-            data.results.map(datum => <li key={datum.id}>{datum.title}</li>) 
+            data.results.map(datum => <Card key={datum.id} data={datum}/>) 
             : <p>"Sorry no movies were found related to these criterias"</p>;
         }
+        // <li key={datum.id}>{datum.title}</li>
     }
 
     render() {

@@ -10,7 +10,7 @@
     margin: 15px 1px 15px 1px;
 }
 
-div.filter-select label {
+div.filter-select>label {
     display: block;
     margin-bottom: 5px;
 }

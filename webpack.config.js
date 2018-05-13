@@ -64,10 +64,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Fullstack Labs',
-           //minify:{
-           // collapseWhitespace: true
-           // },
+            title: 'Show App',
             hash: true,
             template: "./src/index.html"
         }),

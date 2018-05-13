@@ -1,7 +1,7 @@
-.list p, .list i {
+.list>p, .list>i {
     color: #D8D8D8;
 }
 
-.list div{
+.wrapper-spinner{
     text-align: center;
 }
