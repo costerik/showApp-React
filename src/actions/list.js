@@ -100,21 +100,18 @@ export const loadingData = (year, genre) => {
         dispatch(startedLoadingData());
         try {
             console.log("b");
-            await myServices.getDiscover({year, genre})
-                        .then((response)=>{
-                            response.json().then((data)=>{
-                                console.log(data);
-                                dispatch(finishedLoadingData(data));
-                            })
-                        }).catch((err)=>{
-                            // Error :(
-                            console.log("Sorry an error has ocurred fetching movies discover");
-                        });
-            // let photos = [];
-            // if (data && data.length) {
-            //     photos = data;
-            // }
-            // dispatch(finishedLoadingData(photos));
+            await myServices.getDiscover({ year, genre })
+                .then((response) => {
+                    response.json().then((data) => {
+                        console.log(data);
+                        dispatch(finishedLoadingData(data));
+                    })
+                }).catch((err) => {
+                    dispatch(notifyError(
+                        types.ERROR_LOADING_DATA,
+                        `there was a problem loading data`,
+                    ));
+                });
         } catch (ex) {
             dispatch(notifyError(
                 types.ERROR_LOADING_DATA,

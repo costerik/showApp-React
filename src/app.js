@@ -18,6 +18,7 @@ import Search from './components/search/main';
 import Filters from './components/filters/main';
 
 import {loadingData} from './actions/list';
+import myService from './services/myService';
 
 export class MyApp extends React.Component {
   constructor(props) {
