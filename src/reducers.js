@@ -1,6 +1,6 @@
-import moviesReducer from './reducers/list/listReducer';
+import listReducer from './reducers/list/listReducer';
 import filtersReducer from './reducers/filters/filtersReducer';
 export default {
-    moviesReducer,
+    listReducer,
     filtersReducer,
 }

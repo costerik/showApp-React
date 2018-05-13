@@ -16,19 +16,11 @@ import List from './components/list/main';
 import Header from './components/header/main';
 import Search from './components/search/main';
 import Filters from './components/filters/main';
-
-import {loadingData} from './actions/list';
 import myService from './services/myService';
 
 export class MyApp extends React.Component {
   constructor(props) {
     super();
-  }
-
-  async componentWillMount(){
-    console.log("a");
-    await store.dispatch(loadingData(2016, 16));
-    console.log("c");
   }
 
   render() {

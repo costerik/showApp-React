@@ -1,6 +1,7 @@
 import * as types from '../reducers/filters/const';
 import * as globalTypes from '../const';
 import myServices from '../services/myService';
+import { loadingData } from '../actions/list';
 
 export const startedLoadingGenres = () => {
     return {
@@ -20,16 +21,28 @@ export const finishedLoadingGenres = (data) => {
 }
 
 export const setYear = (year) => {
-    return {
-        type: types.SET_YEAR,
-        payload: year,
+    return async (dispatch, getState) => {
+        dispatch({
+            type: types.SET_YEAR,
+            payload: year,
+        });
+        const { filtersReducer } = getState();
+        await dispatch(loadingData(
+            filtersReducer.year && filtersReducer.year.value,
+            filtersReducer.genre && filtersReducer.genre.value));
     }
 }
 
 export const setGenre = (genre) => {
-    return {
-        type: types.SET_GENRE,
-        payload: genre,
+    return async (dispatch, getState) => {
+        dispatch({
+            type: types.SET_GENRE,
+            payload: genre,
+        });
+        const { filtersReducer } = getState();
+        await dispatch(loadingData(
+            filtersReducer.year && filtersReducer.year.value,
+            filtersReducer.genre && filtersReducer.genre.value));
     }
 }
 
@@ -43,7 +56,7 @@ export const notifyError = (type, err) => {
     }
 }
 
-export const loadingGenres = (year, genre) => {
+export const loadingGenres = () => {
     return async dispatch => {
         dispatch(startedLoadingGenres());
         try {

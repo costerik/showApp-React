@@ -1,7 +1,7 @@
 import * as types from './const';
 
 const initialState = {
-    data: [],
+    data: {},
     reducerState: '',
     errorMessage: '',
 }
@@ -12,13 +12,13 @@ export default (state = initialState, action) => {
             return { ...state, reducerState: action.payload };
             break;
         case types.FINISHED_LOADING_DATA:
-            return { ...state, reducerState: action.payload.state, photos: action.payload.data };
+            return { ...state, reducerState: action.payload.state, data: action.payload.data };
             break;
         case types.STARTED_SEARCH_DATA:
             return { ...state, reducerState: action.payload };
             break;
         case types.FINISHED_SEARCH_DATA:
-            return { ...state, reducerState: action.payload.state, photos: action.payload.data };
+            return { ...state, reducerState: action.payload.state, data: action.payload.data };
             break;
         case types.ERROR_LOADING_DATA:
             return {
