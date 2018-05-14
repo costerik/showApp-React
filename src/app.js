@@ -32,7 +32,7 @@ const customStyles = {
     bottom: 0,
     left: 0,
     width: '70%',
-    height: '340px',
+    height: '375px',
     padding: 0,
     backgroundColor: 'rgba(151,151,151,0.0)',
     border: 'none',
@@ -61,6 +61,7 @@ class MyApp extends React.Component {
           <Search />
           <Filters />
           <Modal
+            // className={}
             isOpen={modalIsOpen}
             onRequestClose={this.closeModal}
             style={customStyles}
@@ -69,7 +70,7 @@ class MyApp extends React.Component {
               <i className="fas fa-times" onClick={()=>this.props.closeModal()}></i>
             </div>
             {
-              data.videos && data.videos.results.length > 0 ? <iframe style={{ width: '100%', border: 'none' }} src={myService.youtube + data.videos.results[0].key}>
+              data.videos && data.videos.results.length > 0 ? <iframe style={{ width: '100%', height:'340px', border: 'none' }} src={myService.youtube + data.videos.results[0].key}>
               </iframe> : "No video available..."}
 
           </Modal>

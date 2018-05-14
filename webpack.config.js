@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');  //this is required for HMR
 const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
@@ -9,7 +10,7 @@ const cssDev = [ "style-loader","css-loader"];
 const cssProd = ExtractTextPlugin.extract({   //HMR doesnt work with ExtractTextPlugin
                     fallback: "style-loader",
                     use: "css-loader",
-                    publicPath: "/dist"
+                    publicPath: "/dist/"
                 });
 const scssDev = ["style-loader", "css-loader", "sass-loader"];
 const scssProd = ExtractTextPlugin.extract({   //HMR doesnt work with ExtractTextPlugin
@@ -74,7 +75,13 @@ module.exports = {
             allChunks: true  
         }),
         new webpack.HotModuleReplacementPlugin(), // this two modules allow HMR
-        new webpack.NamedModulesPlugin()           //
+        new webpack.NamedModulesPlugin(),           //
+        new CopyWebpackPlugin([
+            {
+              from: './src/assets/images',
+              to: './images'
+            }
+          ])
     ],
     externals: {
         cheerio: 'window',

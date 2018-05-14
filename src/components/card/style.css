@@ -124,7 +124,7 @@
 }
 
 .card-right__bottom {
-    padding-top: 125px;
+    padding-top: 25px;
 }
 
 .card-right__bottom p {
@@ -160,5 +160,9 @@ p.favorites-link:hover{
     .card>img {
         height: 300px;
         width: 30%;
+    }
+
+    .card-right__bottom {
+        padding-top: 125px;
     }
 }
