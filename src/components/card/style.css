@@ -6,6 +6,12 @@
 .card {
     display: block;
     width: auto;
+    border: 1px solid #D8D8D8;
+    height: 200px;
+}
+
+.wrapper-card{
+    padding: 5px;
 }
 
 .card p {
@@ -118,7 +124,7 @@
 }
 
 .card-right__bottom {
-    padding-top: 28px;
+    padding-top: 125px;
 }
 
 .card-right__bottom p {
@@ -144,4 +150,15 @@
 
 p.favorites-link:hover{
     color: #0ABFFE;
+}
+
+@media screen and (min-width:48.063em) {
+    .card {
+        height: 300px;
+    }
+
+    .card>img {
+        height: 300px;
+        width: 30%;
+    }
 }

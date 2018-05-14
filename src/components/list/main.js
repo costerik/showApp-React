@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadingData } from '../../actions/list';
+import { loadingFavorites } from '../../actions/card';
 import Card from '../card/main';
 import * as globalTypes from '../../const';
 import './style.css';
@@ -10,14 +11,17 @@ class List extends Component {
 
     static propTypes = {
         loadingData: PropTypes.func.isRequired,
+        loadingFavorites: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         reducerState: PropTypes.string.isRequired,
         year: PropTypes.object,
         genre: PropTypes.object,
+        selectedTab: PropTypes.string.isRequired,
     }
 
     async componentWillMount() {
-        await this.props.loadingData(this.props.year && this.props.year.value,this.props.genre && this.props.genre.value);
+        this.props.loadingFavorites();
+        await this.props.loadingData(this.props.year && this.props.year.value, this.props.genre && this.props.genre.value);
     }
 
     displayData(data, genres) {
@@ -35,25 +39,32 @@ class List extends Component {
     render() {
         const { data, genres } = this.props;
         return (
-            <ul className="list">
-                {this.displayData(data, genres)}
-            </ul>
+            <div className="wrapper">
+                <ul className="list">
+                    {this.displayData(data, genres)}
+                </ul>
+            </div>
+
         );
     }
 }
 
-const mapStateToProps = ({ listReducer, filtersReducer }) => {
-    const { data, reducerState } = listReducer;
+const mapStateToProps = ({ listReducer, filtersReducer, headerReducer, cardReducer }) => {
+    const { data } = listReducer;
     const { genres, year, genre } = filtersReducer;
+    const { selectedTab } = headerReducer;
+    const { favorites } = cardReducer;
     return {
-        data,
-        reducerState,
+        data: selectedTab === globalTypes.FAVORITES ? { results: favorites } : data,
+        reducerState: selectedTab === globalTypes.FAVORITES ? cardReducer.reducerState : listReducer.reducerState,
         genres,
-        year, 
+        year,
         genre,
+        selectedTab,
     }
 }
 
 export default connect(mapStateToProps, {
     loadingData,
+    loadingFavorites,
 })(List);

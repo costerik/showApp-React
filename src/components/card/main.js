@@ -4,7 +4,7 @@ import myService from '../../services/myService';
 import "./style.css";
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getMovie, getTv } from '../../actions/card';
+import { getMovie, getTv, addToFavorites } from '../../actions/card';
 import * as globalTypes from '../../const';
 
 class Card extends Component {
@@ -13,6 +13,8 @@ class Card extends Component {
         getMovie: PropTypes.func.isRequired,
         selectedTab: PropTypes.string.isRequired,
         getTv: PropTypes.func.isRequired,
+        addToFavorites: PropTypes.func.isRequired,
+        favorites: PropTypes.array.isRequired,
     }
 
     constructor(props) {
@@ -44,37 +46,49 @@ class Card extends Component {
                 this.props.getTv(this.props.data);
                 break;
             case globalTypes.FAVORITES:
+                if (this.props.data.title) {
+                    await this.props.getMovie(id);
+                } else {
+                    this.props.getTv(this.props.data);
+                }
                 break;
         }
+    }
+
+    dataAdded(dataID, data) {
+        const res = data.find(datum => datum.id == dataID);
+        return res ? true : false;
     }
 
     render() {
         const validationDate = this.props.data.release_date && this.props.data.release_date.toString()
             || this.props.data.first_air_date && this.props.data.first_air_date.toString()
         const date = moment(validationDate).format("MMM Do YYYY");
-
+        const added = this.dataAdded(this.props.data.id, this.props.favorites);
         return (
-            <div className="card">
-                <img src={myService.imagesUrl + this.props.data.poster_path} />
-                <div className="card-right">
-                    <div className="card-right__content">
-                        <div className="card-right__first">
-                            <p className="title">{this.props.data.title || this.props.data.name}</p>
-                            <p className="average">{this.props.data.vote_average}</p>
-                        </div>
-                        <ul>
-                            <li>{date}</li>
-                            <li>{this._genres(this.props.genres, this.props.data.genre_ids || this.props.data.genres.map(g => g.id))}</li>
-                        </ul>
-                        <p className="overview">{this.props.data.overview}</p>
-                        <div className="card-right__bottom">
-                            <p className="show-trailer" onClick={() => this._getTrailer(this.props.data.id)}>
-                                Ver Trailer
+            <div className="wrapper-card">
+                <div className="card">
+                    <img src={myService.imagesUrl + this.props.data.poster_path} />
+                    <div className="card-right">
+                        <div className="card-right__content">
+                            <div className="card-right__first">
+                                <p className="title">{this.props.data.title || this.props.data.name}</p>
+                                <p className="average">{this.props.data.vote_average}</p>
+                            </div>
+                            <ul>
+                                <li>{date}</li>
+                                <li>{this._genres(this.props.genres, this.props.data.genre_ids || this.props.data.genres.map(g => g.id))}</li>
+                            </ul>
+                            <p className="overview">{this.props.data.overview}</p>
+                            <div className="card-right__bottom">
+                                <p className="show-trailer" onClick={() => this._getTrailer(this.props.data.id)}>
+                                    Ver Trailer
                             </p>
-                            <p className="favorites-link" onClick={() => console.log("click")}>
-                                Agregar a favoritos
-                            <i className="fas fa-heart"></i>
-                            </p>
+                                <p className="favorites-link" onClick={() => this.props.addToFavorites(this.props.data)}>
+                                    Agregar a favoritos
+                            <i style={added ? { color: '#0ABFFE' } : null} className="fas fa-heart"></i>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,14 +97,17 @@ class Card extends Component {
     }
 }
 
-const stateMapToProps = ({ headerReducer }) => {
+const stateMapToProps = ({ headerReducer, cardReducer }) => {
     const { selectedTab } = headerReducer;
+    const { favorites } = cardReducer;
     return {
         selectedTab,
+        favorites,
     }
 }
 
 export default connect(stateMapToProps, {
     getMovie,
     getTv,
+    addToFavorites,
 })(Card);

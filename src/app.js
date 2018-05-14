@@ -54,10 +54,9 @@ class MyApp extends React.Component {
 
   render() {
     const { isOpen: modalIsOpen, data } = this.props.reducer.cardReducer;
-    console.log(data);
     return (
       <Router history={browserHistory}>
-        <div>
+        <div >
           <Header />
           <Search />
           <Filters />
@@ -74,7 +73,7 @@ class MyApp extends React.Component {
               </iframe> : "No video available..."}
 
           </Modal>
-          <Route exact path="/movies" component={List} />
+          <Route exact path="/" component={List} />
           <Route path="/series" component={List} />
           <Route path="/favorites" component={List} />
         </div>

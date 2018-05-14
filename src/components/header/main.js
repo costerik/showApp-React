@@ -17,10 +17,10 @@ class Header extends Component {
 
     render() {
         return (
-            <header>
+            <header className="wrapper">
                 <h1><a href="#" >Show APP</a></h1>
                 <ul>
-                    <li><Link to="/movies"
+                    <li><Link to="/"
                         className={this.props.selectedTab === "Movies" ? "hover-tabs" : null}
                         onClick={event => { this.props.changeTab(event.target.innerText) }}
                     >Movies</Link></li>

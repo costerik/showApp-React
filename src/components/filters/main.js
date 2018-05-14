@@ -33,28 +33,31 @@ class Filters extends Component {
 
     render() {
         return (
-            <div className="filters">
+            <div className="filters wrapper">
                 <p>Descubra nuevas películas y programas de televisión</p>
-
-                <div className="filter-select">
-                    <label htmlFor="year">Año</label>
-                    <Select
-                        name="year"
-                        value={this.props.year}
-                        onChange={this._setYear}
-                        options={
-                            this.state.years
-                        } />
-                </div>
-                <div className="filter-select">
-                    <label htmlFor="genre">Genero</label>
-                    <Select
-                        name="genre"
-                        value={this.props.genre}
-                        onChange={(value) => this.props.setGenre(value)}
-                        options={
-                            this.props.genres
-                        } />
+                <div className="wrapper-select">
+                    <div className="filter-select">
+                        <label htmlFor="year">Año</label>
+                        <Select
+                            className="filter-select__select"
+                            name="year"
+                            value={this.props.year}
+                            onChange={this._setYear}
+                            options={
+                                this.state.years
+                            } />
+                    </div>
+                    <div className="filter-select">
+                        <label htmlFor="genre">Genero</label>
+                        <Select
+                            className="filter-select__select"
+                            name="genre"
+                            value={this.props.genre}
+                            onChange={(value) => this.props.setGenre(value)}
+                            options={
+                                this.props.genres
+                            } />
+                    </div>
                 </div>
             </div>
         );

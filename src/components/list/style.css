@@ -5,3 +5,20 @@
 .wrapper-spinner{
     text-align: center;
 }
+
+@media screen and (min-width:30.063em) {
+    ul.list>.wrapper-card{
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:48.063em) {
+    ul.list{
+        width: 100%;
+    }
+
+    ul.list>.wrapper-card{
+        display: inline-block;
+        width: 49%;
+    }
+}

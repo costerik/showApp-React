@@ -6,6 +6,8 @@ export const MOVIES='Movies';
 export const SERIES='Series';
 export const FAVORITES='Favorites';
 
+export const DUPLICATED_MSG = `Can't add this data, It's already added`;
+
 export const years = () => {
     const years = [...Array(1 + 2017 - 1990).keys()].map(v => 1990 + v).reverse();
     let yearsObject = [];
