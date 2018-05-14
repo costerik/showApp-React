@@ -36,21 +36,18 @@ export const searchingData = (keyword) => {
             let response, data;
             switch (selectedTab) {
                 case globalTypes.MOVIES:
-                    console.log("movies");
                     response = await myServices.searchMovies(keyword);
                     data = await response.json();
                     dispatch(finishedLoadingData(data));
                     dispatch(finishedSearchData());
                     break;
                 case globalTypes.SERIES:
-                    console.log("Series");
                     response = await myServices.searchTv(keyword);
                     data = await response.json();
                     dispatch(finishedLoadingData(data));
                     dispatch(finishedSearchData());
                     break;
                 case globalTypes.FAVORITES:
-                    console.log("favorites");
                     break;
             }
         } catch (err) {

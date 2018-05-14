@@ -28,7 +28,6 @@ export default {
                 paramsUrl += "&" + key + "=" + params[key];
             }
         }
-        console.log(`${_apiUrl + _endPoints.discoverMovie}?api_key=${_key}${paramsUrl}`);
         return fetch(`${_apiUrl + _endPoints.discoverMovie}?api_key=${_key}${paramsUrl}`, {
             method: 'get'
         });
@@ -40,7 +39,6 @@ export default {
                 paramsUrl += "&" + key + "=" + params[key];
             }
         }
-        console.log(`${_apiUrl + _endPoints.discoverTv}?api_key=${_key}${paramsUrl}`);
         return fetch(`${_apiUrl + _endPoints.discoverTv}?api_key=${_key}${paramsUrl}`, {
             method: 'get'
         });
@@ -61,13 +59,11 @@ export default {
         });
     },
     searchMovies: (text) => {
-        console.log(`${_apiUrl + _endPoints.searchMovies}?api_key=${_key}&query=${text}`);
         return fetch(`${_apiUrl + _endPoints.searchMovies}?api_key=${_key}&query=${text}`, {
             method: 'get'
         });
     },
     searchTv: (text) => {
-        console.log(`${_apiUrl + _endPoints.searchTv}?api_key=${_key}&query=${text}`);
         return fetch(`${_apiUrl + _endPoints.searchTv}?api_key=${_key}&query=${text}`, {
             method: 'get'
         });
