@@ -8,6 +8,17 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+div.modal-trailer{
+  /* background-color: rgba(151,151,151,0.7); */
+  height: 30px;
+  width: 100%;
+}
+
+div.modal-trailer i{
+  float: right;
+  color: #D8D8D8;
+}
+
 @media screen and (min-width:30.063em){
   
 }

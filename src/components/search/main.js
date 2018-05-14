@@ -15,7 +15,6 @@ class Search extends Component {
     }
 
     async _searchData(e) {
-        console.log(e.target.value);
         e.target.value.length > 0 ? await this.props.searchingData(e.target.value) : null;
     }
 

@@ -95,23 +95,60 @@ export const initialLoading = () => {
     }
 }
 
+export const getTvDetails = async (data) => {
+    let results=[];
+    for(let tv in data.results){
+        const result = await myServices.getTv(data.results[tv].id);
+        const response = await result.json();
+        results.push(response);
+    }
+    data.results = results;
+    return data;
+}
+
 export const loadingData = (year, genre) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch(startedLoadingData());
         try {
-            console.log("b");
-            await myServices.getDiscoverMovie({ year, with_genres: genre })
-                .then((response) => {
-                    response.json().then((data) => {
-                        console.log(data);
-                        dispatch(finishedLoadingData(data));
-                    })
-                }).catch((err) => {
-                    dispatch(notifyError(
-                        types.ERROR_LOADING_DATA,
-                        `there was a problem loading data`,
-                    ));
-                });
+            const { headerReducer } = getState();
+            const { selectedTab } = headerReducer;
+            console.log("Selected", selectedTab);
+            switch (selectedTab) {
+                case globalTypes.MOVIES:
+                    console.log("movies");
+                    await myServices.getDiscoverMovie({ year, with_genres: genre })
+                        .then((response) => {
+                            response.json().then((data) => {
+                                dispatch(finishedLoadingData(data));
+                            })
+                        }).catch((err) => {
+                            dispatch(notifyError(
+                                types.ERROR_LOADING_DATA,
+                                `there was a problem loading data`,
+                            ));
+                        });
+                    break;
+                case globalTypes.SERIES:
+                    console.log("Series");
+                    await myServices.getDiscoverTv({ first_air_date_year: year, with_genres: genre })
+                        .then((response) => {
+                            response.json().then(async (data) => {
+                                const myData = await getTvDetails(data);
+                                console.log(myData);
+                                dispatch(finishedLoadingData(myData));
+                            })
+                        }).catch((err) => {
+                            dispatch(notifyError(
+                                types.ERROR_LOADING_DATA,
+                                `there was a problem loading data`,
+                            ));
+                        });
+                    break;
+                case globalTypes.FAVORITES:
+                    console.log("favorites");
+                    break;
+            }
+
         } catch (ex) {
             dispatch(notifyError(
                 types.ERROR_LOADING_DATA,

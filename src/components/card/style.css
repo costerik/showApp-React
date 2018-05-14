@@ -141,3 +141,7 @@
 .card-right__bottom .favorites-link i {
     padding-left: 5px;
 }
+
+p.favorites-link:hover{
+    color: #0ABFFE;
+}

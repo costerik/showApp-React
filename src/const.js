@@ -2,6 +2,10 @@ export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';
 export const ERROR = 'ERROR';
 
+export const MOVIES='Movies';
+export const SERIES='Series';
+export const FAVORITES='Favorites';
+
 export const years = () => {
     const years = [...Array(1 + 2017 - 1990).keys()].map(v => 1990 + v).reverse();
     let yearsObject = [];
@@ -10,24 +14,3 @@ export const years = () => {
     }
     return yearsObject;
 }
-
-export const genres = [{
-    value: 'Acción',
-    label: 'Accion'
-},
-{
-    value: 'Aventura',
-    label: 'Aventura'
-}
-    , {
-    value: 'Animación',
-    label: 'Animación'
-},
-{
-    value: 'Comedia',
-    label: 'Comedia'
-},
-{
-    value: 'Documentales',
-    label: 'Documentales'
-}];

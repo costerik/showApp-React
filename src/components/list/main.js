@@ -12,14 +12,15 @@ class List extends Component {
         loadingData: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         reducerState: PropTypes.string.isRequired,
+        year: PropTypes.object,
+        genre: PropTypes.object,
     }
 
     async componentWillMount() {
-        await this.props.loadingData();
+        await this.props.loadingData(this.props.year && this.props.year.value,this.props.genre && this.props.genre.value);
     }
 
     displayData(data, genres) {
-        console.log(this.props.reducerState);
         if (this.props.reducerState === globalTypes.LOADING) {
             return (
                 <div className="wrapper-spinner"><i className="fa fa-spinner fa-spin fa-3x" /></div>
@@ -33,7 +34,6 @@ class List extends Component {
 
     render() {
         const { data, genres } = this.props;
-        console.log('render', data, genres);
         return (
             <ul className="list">
                 {this.displayData(data, genres)}
@@ -44,11 +44,13 @@ class List extends Component {
 
 const mapStateToProps = ({ listReducer, filtersReducer }) => {
     const { data, reducerState } = listReducer;
-    const { genres } = filtersReducer;
+    const { genres, year, genre } = filtersReducer;
     return {
         data,
         reducerState,
         genres,
+        year, 
+        genre,
     }
 }
 

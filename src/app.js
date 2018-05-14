@@ -17,29 +17,85 @@ import Header from './components/header/main';
 import Search from './components/search/main';
 import Filters from './components/filters/main';
 import myService from './services/myService';
+import Modal from 'react-modal';
+import { connect } from 'react-redux';
+import {closeModal} from './actions/card';
+import PropTypes from 'prop-types';
 
-export class MyApp extends React.Component {
+Modal.setAppElement('#root');
+
+const customStyles = {
+  content: {
+    margin: 'auto',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    width: '70%',
+    height: '340px',
+    padding: 0,
+    backgroundColor: 'rgba(151,151,151,0.0)',
+    border: 'none',
+  },
+  overlay: {
+    backgroundColor: 'rgba(151,151,151,0.7)',
+  }
+};
+
+class MyApp extends React.Component {
+
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super();
   }
 
   render() {
+    const { isOpen: modalIsOpen, data } = this.props.reducer.cardReducer;
+    console.log(data);
     return (
-      <Provider store={store}>
-        <Router history={browserHistory}>
-          <div>
-            <Header />
-            <Search />
-            <Filters />
-            <Route exact path="/" component={List} />
-          </div>
-        </Router>
-      </Provider>
+      <Router history={browserHistory}>
+        <div>
+          <Header />
+          <Search />
+          <Filters />
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+          >
+            <div className="modal-trailer">
+              <i className="fas fa-times" onClick={()=>this.props.closeModal()}></i>
+            </div>
+            {
+              data.videos && data.videos.results.length > 0 ? <iframe style={{ width: '100%', border: 'none' }} src={myService.youtube + data.videos.results[0].key}>
+              </iframe> : "No video available..."}
+
+          </Modal>
+          <Route exact path="/movies" component={List} />
+          <Route path="/series" component={List} />
+          <Route path="/favorites" component={List} />
+        </div>
+      </Router>
     );
   }
 }
 
+const mapStateToProps = (reducer) => {
+  return {
+    reducer,
+  }
+}
+
+const Root = connect(mapStateToProps, {
+  closeModal,
+})(MyApp);
+
 ReactDOM.render(
-  <MyApp />,
+  <Provider store={store}>
+    <Root />
+  </Provider>,
   document.getElementById('root')
 );

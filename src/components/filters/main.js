@@ -20,15 +20,8 @@ class Filters extends Component {
     }
 
     async _setYear(value) {
-        console.log(value);
         await this.props.setYear(value);
-        console.log("End Set");
     }
-
-    async _setGenre() {
-
-    }
-
 
     constructor(props) {
         super(props);

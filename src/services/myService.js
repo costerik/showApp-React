@@ -7,7 +7,8 @@ const _key = '2c76f2934b9b26dd102cc7de830a7455';
 const _endPoints = {
     discoverMovie: 'discover/movie',
     discoverTv: 'discover/tv',
-    detail: 'movie',
+    detailMovie: 'movie',
+    detailTv: 'tv',
     searchMovies: 'search/movie',
     searchTv: 'search/tv',
     popular: 'movie/popular',
@@ -50,16 +51,23 @@ export default {
         });
     },
     getMovie: (id) => {
-        return fetch(`${_apiUrl + _endPoints.detail}/${id}?api_key=${_key}&append_to_response=keywords,credits,videos`, {
+        return fetch(`${_apiUrl + _endPoints.detailMovie}/${id}?api_key=${_key}&append_to_response=keywords,credits,videos`, {
+            method: 'get'
+        });
+    },
+    getTv: (id) => {
+        return fetch(`${_apiUrl + _endPoints.detailTv}/${id}?api_key=${_key}&append_to_response=keywords,credits,videos`, {
             method: 'get'
         });
     },
     searchMovies: (text) => {
+        console.log(`${_apiUrl + _endPoints.searchMovies}?api_key=${_key}&query=${text}`);
         return fetch(`${_apiUrl + _endPoints.searchMovies}?api_key=${_key}&query=${text}`, {
             method: 'get'
         });
     },
     searchTv: (text) => {
+        console.log(`${_apiUrl + _endPoints.searchTv}?api_key=${_key}&query=${text}`);
         return fetch(`${_apiUrl + _endPoints.searchTv}?api_key=${_key}&query=${text}`, {
             method: 'get'
         });

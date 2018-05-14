@@ -1,4 +1,4 @@
-header>h1{
+header>h1 {
     padding: 15px;
 }
 
@@ -16,7 +16,7 @@ header>h1>a {
     margin: 0 auto;
 }
 
-header>ul{
+header>ul {
     display: table;
     width: 100%;
 }
@@ -25,8 +25,8 @@ header>ul li {
     display: table-cell;
 }
 
-header>ul li:hover{
-    border-bottom: 2px solid #0ABFFE;
+header>ul li:hover {
+   
 }
 
 header>ul li a {
@@ -37,8 +37,14 @@ header>ul li a {
     padding-bottom: 5px;
 }
 
-header>ul li a:hover{
+header>ul li a:hover {
     color: #0ABFFE;
+    border-bottom: 2px solid #0ABFFE;
+}
+
+.hover-tabs{
+    color: #0ABFFE;
+    border-bottom: 2px solid #0ABFFE;
 }
 
 @media screen and (min-width:30.063em) {}

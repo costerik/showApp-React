@@ -1,7 +1,7 @@
 import * as types from '../reducers/search/const';
 import * as globalTypes from '../const';
 import myServices from '../services/myService';
-import {finishedLoadingData} from '../actions/list';
+import { finishedLoadingData } from '../actions/list';
 
 export const startedSearchData = () => {
     return {
@@ -28,18 +28,31 @@ export const notifyError = (type, err) => {
 }
 
 export const searchingData = (keyword) => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
         dispatch(startedSearchData());
         try {
-            await myServices.searchMovies(keyword)
-                .then((response) => {
-                    response.json().then(async (data) => {
-                        await dispatch(finishedLoadingData(data));
-                        console.log(data);
-                        dispatch(finishedSearchData());
-                    })
-                })
-                .catch();
+            const { headerReducer } = getState();
+            const { selectedTab } = headerReducer;
+            let response, data;
+            switch (selectedTab) {
+                case globalTypes.MOVIES:
+                    console.log("movies");
+                    response = await myServices.searchMovies(keyword);
+                    data = await response.json();
+                    dispatch(finishedLoadingData(data));
+                    dispatch(finishedSearchData());
+                    break;
+                case globalTypes.SERIES:
+                    console.log("Series");
+                    response = await myServices.searchTv(keyword);
+                    data = await response.json();
+                    dispatch(finishedLoadingData(data));
+                    dispatch(finishedSearchData());
+                    break;
+                case globalTypes.FAVORITES:
+                    console.log("favorites");
+                    break;
+            }
         } catch (err) {
             dispatch(notifyError(
                 types.ERROR_SEARCHING_DATA,
