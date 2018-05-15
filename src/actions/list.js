@@ -112,10 +112,8 @@ export const loadingData = (year, genre) => {
         try {
             const { headerReducer } = getState();
             const { selectedTab } = headerReducer;
-            console.log("Selected", selectedTab);
             switch (selectedTab) {
                 case globalTypes.MOVIES:
-                    console.log("movies");
                     await myServices.getDiscoverMovie({ year, with_genres: genre })
                         .then((response) => {
                             response.json().then((data) => {
@@ -129,12 +127,10 @@ export const loadingData = (year, genre) => {
                         });
                     break;
                 case globalTypes.SERIES:
-                    console.log("Series");
                     await myServices.getDiscoverTv({ first_air_date_year: year, with_genres: genre })
                         .then((response) => {
                             response.json().then(async (data) => {
                                 const myData = await getTvDetails(data);
-                                console.log(myData);
                                 dispatch(finishedLoadingData(myData));
                             })
                         }).catch((err) => {
@@ -145,7 +141,6 @@ export const loadingData = (year, genre) => {
                         });
                     break;
                 case globalTypes.FAVORITES:
-                    console.log("favorites");
                     break;
             }
 

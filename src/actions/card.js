@@ -136,7 +136,6 @@ export const addToFavorites = (favorite) => {
             LocalStorage.save("favorites", favorites);
             dispatch(finishedAddData(favorites));
         }
-        console.log(getState().cardReducer.favorites);
     }
 }
 
@@ -150,7 +149,6 @@ export const loadingFavorites = () => {
                 favorites = data;
             }
             dispatch(finishedLoadingFavorites(favorites));
-            console.log(getState().cardReducer.favorites);
         } catch (ex) {
             dispatch(notifyError(
                 types.ERROR_LOADING_FAVORITES,

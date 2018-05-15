@@ -27,7 +27,6 @@ export const setYear = (year) => {
             payload: year,
         });
         const { filtersReducer } = getState();
-        console.log(filtersReducer);
         await dispatch(loadingData(
             filtersReducer.year && filtersReducer.year.value,
             filtersReducer.genre && filtersReducer.genre.value));
