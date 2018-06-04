@@ -6,33 +6,33 @@ const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
 
 const isProd = process.env.ENV === 'prod' ? true : false;
-const cssDev = [ "style-loader","css-loader"];
+const cssDev = ["style-loader", "css-loader"];
 const cssProd = ExtractTextPlugin.extract({   //HMR doesnt work with ExtractTextPlugin
-                    fallback: "style-loader",
-                    use: "css-loader",
-                    publicPath: "/dist/"
-                });
+    fallback: "style-loader",
+    use: "css-loader",
+    publicPath: "/dist/"
+});
 const scssDev = ["style-loader", "css-loader", "sass-loader"];
 const scssProd = ExtractTextPlugin.extract({   //HMR doesnt work with ExtractTextPlugin
-  fallback: "style-loader",
-  use: ["css-loader", "sass-loader"],
-  publicPath: "/dist"
+    fallback: "style-loader",
+    use: ["css-loader", "sass-loader"],
+    publicPath: "/dist"
 });
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
-    entry:[ 
-        'babel-polyfill','./src/app.js'
+    entry: [
+        'babel-polyfill', './src/app.js'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js', //[name] refer to properties on entry object
         publicPath: '/'
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
-                test:/\.css$/,
+                test: /\.css$/,
                 use: isProd ? cssProd : cssDev,
             },
             {
@@ -40,12 +40,12 @@ module.exports = {
                 use: isProd ? scssProd : scssDev
             },
             {
-                test:/\.js$/,
+                test: /\.js$/,
                 exclude: /node_module/,
                 use: "babel-loader"
             },
             {
-                test:/\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 exclude: /node_module/,
                 use: [
                     "file-loader?name=[name].[ext]&outputPath=images/",
@@ -54,7 +54,7 @@ module.exports = {
             }
         ]
     },
-    devServer:{
+    devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         //port: 9000,
@@ -72,21 +72,24 @@ module.exports = {
         new ExtractTextPlugin({
             filename: "app.bundle.css",
             disable: !isProd, //This flag must be true with HMR
-            allChunks: true  
+            allChunks: true
         }),
         new webpack.HotModuleReplacementPlugin(), // this two modules allow HMR
         new webpack.NamedModulesPlugin(),           //
         new CopyWebpackPlugin([
             {
-              from: './src/assets/images',
-              to: './images'
+                from: './src/assets/images',
+                to: './images'
             }
-          ])
+        ]),
+        new webpack.DefinePlugin({
+            ENV: JSON.stringify(process.env.ENV),
+        })
     ],
     externals: {
         cheerio: 'window',
         'react/addons': 'react',
         'react/lib/ExecutionEnvironment': 'react',
         'react/lib/ReactContext': 'react',
-      }
+    }
 }

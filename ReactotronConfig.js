@@ -7,5 +7,7 @@ Reactotron.configure()
     .use(reactotronRedux())
     .use(trackGlobalErrors());
 
-Reactotron.connect();
+if (ENV) {
+    Reactotron.connect();
+}
 

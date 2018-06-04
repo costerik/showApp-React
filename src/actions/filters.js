@@ -73,13 +73,13 @@ export const loadingGenres = () => {
                     })
                 }).catch((err) => {
                     dispatch(notifyError(
-                        types.ERROR_LOADING_DATA,
+                        types.ERROR_LOADING_GENRES,
                         `there was a problem loading genres`,
                     ));
                 });
         } catch (ex) {
             dispatch(notifyError(
-                types.ERROR_LOADING_DATA,
+                types.ERROR_LOADING_GENRES,
                 `there was a problem loading genres`,
             ));
         }

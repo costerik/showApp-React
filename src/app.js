@@ -2,24 +2,19 @@ import '../ReactotronConfig';
 import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { compose, applyMiddleware, combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import Reactotron from 'reactotron-react-js';
-import reducers from './reducers';
-import { BrowserRouter as Router, Route, Link, browserHistory } from 'react-router-dom';
-const appReducer = combineReducers({ ...reducers, });
-const middleware = applyMiddleware(thunkMiddleware);
-const store = Reactotron.createStore(appReducer, compose(middleware));
+import { Provider, connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'react-router-redux';
+import Modal from 'react-modal';
+import store, { history } from './store';
+
 import './styles/app.css';
 import List from './components/list/main';
 import Header from './components/header/main';
 import Search from './components/search/main';
 import Filters from './components/filters/main';
 import myService from './services/myService';
-import Modal from 'react-modal';
-import { connect } from 'react-redux';
-import {closeModal} from './actions/card';
+import { closeModal } from './actions/card';
 import PropTypes from 'prop-types';
 
 Modal.setAppElement('#root');
@@ -49,34 +44,38 @@ class MyApp extends React.Component {
   }
 
   constructor(props) {
-    super();
+    super(props);
   }
 
   render() {
     const { isOpen: modalIsOpen, data } = this.props.reducer.cardReducer;
     return (
-      <Router history={browserHistory}>
+      <Router history={history}>
         <div >
           <Header />
           <Search />
           <Filters />
           <Modal
-            // className={}
             isOpen={modalIsOpen}
             onRequestClose={this.closeModal}
             style={customStyles}
           >
             <div className="modal-trailer">
-              <i className="fas fa-times" onClick={()=>this.props.closeModal()}></i>
+              <i
+                className="fas fa-times"
+                onClick={() => this.props.closeModal()}></i>
             </div>
             {
-              data.videos && data.videos.results.length > 0 ? <iframe style={{ width: '100%', height:'340px', border: 'none' }} src={myService.youtube + data.videos.results[0].key}>
-              </iframe> : "No video available..."}
-
+              data.videos && data.videos.results.length > 0 ?
+                <iframe
+                  style={{ width: '100%', height: '340px', border: 'none' }}
+                  src={myService.youtube + data.videos.results[0].key}>
+                </iframe> : "No video available..."
+            }
           </Modal>
-          <Route exact path="/" component={List} />
-          <Route path="/series" component={List} />
-          <Route path="/favorites" component={List} />
+            <Route exact path="/" component={List} />
+            <Route path="/series" component={List} />
+            <Route path="/favorites" component={List} />
         </div>
       </Router>
     );
